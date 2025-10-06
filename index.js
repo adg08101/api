@@ -3,10 +3,10 @@ const app = express();
 
 app
   .get("/", (req, res) => {
-    return res.status(200).send("Local get");
+    return res.status(200).json("Local get");
   })
   .post("/register", (req, res) => {
-    res.status(200).send("Local post register");
+    res.status(200).json("Local post register");
   });
 
 const port = 8080;
