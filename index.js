@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+require("dotenv").config();
 
 const corsOptions = {
   origin: "*",
@@ -18,7 +19,7 @@ app
     res.status(200).json(req.body);
   });
 
-const port = 4000;
+const port = process.env.PORT;
 
 app.listen(port, () => {
   console.log(`Server running on port  ${port}`);
