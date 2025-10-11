@@ -1,5 +1,3 @@
-// controllers/authController.js
-
 const User = require("../models/User"); // Adjust path as needed
 
 const registerUser = async (req, res) => {
