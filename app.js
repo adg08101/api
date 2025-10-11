@@ -1,6 +1,5 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const app = express();
 const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 
@@ -9,7 +8,9 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-app.use(bodyParser.urlencoded({ extended: false }));
+const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.use(express.json());
