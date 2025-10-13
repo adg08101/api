@@ -2,6 +2,7 @@ const { appConfig, dbConfig } = require("./config");
 const app = require("./app");
 const connectDb = require("./db/mongodb");
 
+
 async function initApp(appConfig, dbConfig) {
   const port = appConfig.appPort;
 

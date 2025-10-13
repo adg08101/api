@@ -4,8 +4,10 @@ const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 
 const corsOptions = {
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
 };
 
 const app = express();
