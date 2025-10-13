@@ -1,5 +1,9 @@
 const User = require("../models/User"); // Adjust path as needed
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { secretConfig } = require("../config");
+
+const SECRET_KEY = secretConfig.secretToken;
 
 const registerUser = async (req, res) => {
   try {
@@ -53,16 +57,20 @@ const loginUser = async (req, res) => {
     }
 
     // If using JWT, generate token (optional)
-    // const token = generateToken(user._id);
+    const token = generateToken(user);
 
-    res.status(200).json({
+    res.cookie("user", user).status(200).json({
       message: "Login successful",
-      // token, // uncomment if token-based authentication is added later
+      token, // uncomment if token-based authentication is added later
     });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Server error" });
   }
+};
+
+const generateToken = (user) => {
+  return jwt.sign({ user: user }, SECRET_KEY, { expiresIn: "1h" });
 };
 
 module.exports = { registerUser, loginUser };

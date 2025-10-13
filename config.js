@@ -11,6 +11,9 @@ const config = {
     dbName: process.env.DB_NAME,
     dbHost: process.env.DB_HOST,
   },
+  secretConfig: {
+    secretToken: process.env.TOKEN_SECRET,
+  },
 };
 
 module.exports = config;
