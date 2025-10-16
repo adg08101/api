@@ -59,18 +59,30 @@ const loginUser = async (req, res) => {
     // If using JWT, generate token (optional)
     const token = generateToken(user);
 
-    res.cookie("user", user).status(200).json({
-      message: "Login successful",
-      token, // uncomment if token-based authentication is added later
-    });
+    res
+      .cookie("user", token, {
+        httpOnly: true, // prevents JS access (XSS protection)
+        secure: true, // send only over HTTPS (disable in localhost)
+        sameSite: "strict", // CSRF protection
+        maxAge: 1000 * 60 * 60 * 24, // 1 day
+      })
+      .status(200)
+      .json({
+        message: "Login successful",
+        token, // uncomment if token-based authentication is added later
+      });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
+const getProfile = async (req, res) => {
+  res.status(200).json(req.cookies);
+};
+
 const generateToken = (user) => {
   return jwt.sign({ user: user }, SECRET_KEY, { expiresIn: "1h" });
 };
 
-module.exports = { registerUser, loginUser };
+module.exports = { registerUser, loginUser, getProfile };
