@@ -61,11 +61,9 @@ const loginUser = async (req, res) => {
 
     res
       .cookie("token", token, {
-        httpOnly: false, // prevents JS access (XSS protection)
-        secure: false, // send only over HTTPS (disable in localhost)
-        sameSite: "none", // CSRF protection
-        maxAge: 1000 * 60 * 60 * 24, // 1 day
-        credentials: true,
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
       })
       .status(200)
       .json({
@@ -79,13 +77,11 @@ const loginUser = async (req, res) => {
 };
 
 const getProfile = async (req, res) => {
-  console.log("COOKIES RECEIVED =>", req.cookies);
-
   if (!req.cookies || !req.cookies.token) {
     return res.status(401).json({ message: "Unauthorized - No cookie" });
   }
 
-  res.status(200).json({ message: "Authorized", cookie: req.cookies.user });
+  res.status(200).json({ message: "Authorized", cookie: req.cookies.token });
 };
 
 const generateToken = (user) => {
