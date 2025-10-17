@@ -11,7 +11,7 @@ const router = express.Router();
 // @route   POST /api/auth/register
 // @desc    Register new user
 router
-  .post("/register", verifyToken, registerUser)
+  .post("/register", registerUser)
   .post("/login", loginUser)
   .get("/profile", getProfile);
 
